@@ -15,4 +15,13 @@ class Game {
     var winner: Player? = null
         private set
 
+    /**
+     * Play turn by turn
+     */
+    fun play(row: Int, col: Int) {
+        if (row >= boardSize || col >= boardSize) throw InvalidFieldException()
+        if (board[row][col] != null) throw FieldOccupiedException()
+        board[row][col] = currentPlayer
+        currentPlayer = if (currentPlayer == Player.X) Player.O else Player.X
+    }
 }
