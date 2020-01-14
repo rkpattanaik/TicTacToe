@@ -37,4 +37,79 @@ class GameTest {
         game.play(1, 2)
         assertEquals(Player.O, game.currentPlayer)
     }
+
+    @Test
+    fun `test win by row`() {
+        // XXX
+        // OO.
+        // ...
+        game.play(0, 0) // Player X
+        game.play(1, 0) // Player O
+        game.play(0, 1) // Player X
+        game.play(1, 1) // Player O
+        game.play(0, 2) // Player X
+        assertEquals(Player.X, game.winner)
+        assertEquals(true, game.isFinished)
+    }
+
+    @Test
+    fun `test win by column`() {
+        // XO.
+        // XO.
+        // X..
+        game.play(0, 0) // Player X
+        game.play(0, 1) // Player O
+        game.play(1, 0) // Player X
+        game.play(1, 1) // Player O
+        game.play(2, 0) // Player X
+        assertEquals(Player.X, game.winner)
+        assertEquals(true, game.isFinished)
+    }
+
+    @Test
+    fun `test win diagonally from top-left to bottom-right`() {
+        // O..
+        // XO.
+        // XXO
+        game.play(1, 0) // Player X
+        game.play(0, 0) // Player O
+        game.play(2, 0) // Player X
+        game.play(1, 1) // Player O
+        game.play(2, 1) // Player X
+        game.play(2, 2) // Player O
+        assertEquals(Player.O, game.winner)
+        assertEquals(true, game.isFinished)
+    }
+
+    @Test
+    fun `test win diagonally from bottom-left to top-right`() {
+        // OOX
+        // .X.
+        // X..
+        game.play(2, 0) // Player X
+        game.play(0, 1) // Player O
+        game.play(1, 1) // Player X
+        game.play(0, 0) // Player O
+        game.play(0, 2) // Player X
+        assertEquals(Player.X, game.winner)
+        assertEquals(true, game.isFinished)
+    }
+
+    @Test
+    fun `test draw`() {
+        // XOO
+        // OXX
+        // XXO
+        game.play(0, 0) // Player X
+        game.play(1, 0) // Player O
+        game.play(1, 1) // Player X
+        game.play(2, 2) // Player O
+        game.play(2, 0) // Player X
+        game.play(0, 2) // Player O
+        game.play(2, 1) // Player X
+        game.play(0, 1) // Player O
+        game.play(1, 2) // Player X
+        assertEquals(null, game.winner)
+        assertEquals(true, game.isFinished)
+    }
 }
